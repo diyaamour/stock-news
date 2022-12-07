@@ -51,7 +51,7 @@ else:
 
 percent_diff = round(100 * (difference / (float(yesterday_closing_price))))
 
-if abs(percent_diff) > 5:
+if abs(percent_diff) > 0:
     news_response = requests.get(NEWS_ENDPOINT, news_params)
     news_response.raise_for_status()
     articles = news_response.json()["articles"]
@@ -63,6 +63,6 @@ if abs(percent_diff) > 5:
     for article in formatted_articles:
         message = client.messages.create(
             body=article,
-            from_='+15044144801',
-            to='+12026707145'
+            from_=os.environ["TWILIO_PHONE"],
+            to=os.environ["PHONE_NUMBER"]
         )
